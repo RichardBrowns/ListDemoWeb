@@ -60,7 +60,7 @@ export default {
     const pageSize = ref(10);
 
     const fetchTableData = async (newCurrentPage, newPageSize) => {
-      if(selectedFilter.value || searchText.value){
+      if (selectedFilter.value || searchText.value) {
         handleSearch();
         return
       }
@@ -85,7 +85,7 @@ export default {
     };
 
     const handleSearch = async () => {
-       try {
+      try {
         let gender;
         if (selectedFilter.value == 'Male') {
           gender = 'M';
@@ -108,7 +108,7 @@ export default {
         } else {
           console.error(`请求失败，状态码：${responseData.data.code}`);
         }
-      }catch(error){
+      } catch (error) {
         console.error('获取用户信息失败:', error);
       }
     };
@@ -119,8 +119,17 @@ export default {
       console.log(`编辑用户 ${id}`);
     };
 
-    const handleDelete = (id) => {
-      console.log(`删除用户 ${id}`);
+    const handleDelete = async (id) => {
+      try {
+        const response = await axios.delete(`/api/user?id=${id}`);
+        if (response.data && response.data.code === 200) {
+          fetchTableData(currentPage.value, pageSize.value);
+        } else {
+          console.error(`删除用户失败，状态码：${response.data.code}`);
+        }
+      } catch (error) {
+        console.error('删除用户失败:', error);
+      }
     };
 
     const handleSizeChange = (newPageSize) => {
@@ -134,7 +143,7 @@ export default {
       fetchTableData(currentPage.value, pageSize.value);
     };
 
-    
+
 
     onMounted(() => {
       fetchTableData(currentPage.value, pageSize.value);
