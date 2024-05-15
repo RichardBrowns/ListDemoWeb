@@ -16,6 +16,8 @@ const app = createApp(App);
 app.config.globalProperties.$axios = axios;
 // 注册Vue Router
 app.use(router);
+// 提供router实例
+app.provide("$router",router);
 //全局注册Element Plus
 app.use(ElementPlus);
 //全局注册Element Plus 图标

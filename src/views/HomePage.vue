@@ -12,7 +12,7 @@
       <el-input v-model="searchText" placeholder="Enter Username" style="width: 240px" />
       <!-- 搜索按钮 -->
       <el-button @click="handleSearch" type="primary">查询</el-button>
-      <el-button @click="handleAdd" type="primary">新增</el-button>
+      <el-button @click="$router.push('/adduser')" type="primary">新增</el-button>
     </div>
     <!-- 表格 -->
     <el-table :data="tableData" style="width: 100%">
@@ -113,9 +113,7 @@ export default {
       }
     };
 
-    const handleAdd = () => {
-      console.log('新增用户');
-    };
+
 
     const handleEdit = (id) => {
       console.log(`编辑用户 ${id}`);
@@ -150,7 +148,6 @@ export default {
       currentPage,
       pageSize,
       handleSearch,
-      handleAdd,
       handleEdit,
       handleDelete,
       handleSizeChange,

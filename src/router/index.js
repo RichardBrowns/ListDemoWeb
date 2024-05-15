@@ -1,6 +1,7 @@
 // src/router/index.js
 import { createRouter, createWebHistory } from 'vue-router';
 import HomePage from '@/views/HomePage.vue'; // 假设你的单页面组件是Home.vue
+import AddUser from '@/views/AddUser.vue';
 
 export default createRouter({
   history: createWebHistory(),
@@ -12,6 +13,10 @@ export default createRouter({
     {
       path: '/home',
       component: HomePage,
+    },
+    {
+      path: '/adduser',
+      component: AddUser,
     },
   ],
 });
