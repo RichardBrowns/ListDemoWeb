@@ -26,7 +26,7 @@
       <!-- 编辑按钮 -->
       <el-table-column width="100">
         <template v-slot:default="{ row }">
-          <el-button @click="handleEdit(row.id)" type="primary">编辑</el-button>
+          <el-button @click="handleEdit(row)" type="primary">编辑</el-button>
         </template>
       </el-table-column>
       <!-- 删除按钮 -->
@@ -46,7 +46,7 @@
 </template>
 
 <script>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, inject } from 'vue';
 import axios from 'axios';
 
 export default {
@@ -58,6 +58,8 @@ export default {
     const totalItems = ref(0);
     const currentPage = ref(1);
     const pageSize = ref(10);
+
+    const router = inject('$router');
 
     const fetchTableData = async (newCurrentPage, newPageSize) => {
       if (selectedFilter.value || searchText.value) {
@@ -113,10 +115,26 @@ export default {
       }
     };
 
+    const handleEdit = (row) => {
+      const formData = {
+        id: row.id,
+        username: row.username,
+        password: row.password,
+        firstName: row.firstName,
+        lastName: row.lastName,
+        email: row.email,
+        birthDate: row.birthDate,
+        gender: row.gender,
+      };
 
+      const queryParams = new URLSearchParams();
+      for (const key in formData) {
+        if (Object.prototype.hasOwnProperty.call(formData, key)) {
+          queryParams.append(key, formData[key]);
+        }
+      }
 
-    const handleEdit = (id) => {
-      console.log(`编辑用户 ${id}`);
+      router.push(`/editUser?${queryParams.toString()}`);
     };
 
     const handleDelete = async (id) => {
